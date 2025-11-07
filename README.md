@@ -1,74 +1,172 @@
-# React + TypeScript + Vite
+# E-Market API 🛒
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Une API REST complète pour une plateforme e-commerce construite avec Node.js, Express.js et MongoDB.
 
-Currently, two official plugins are available:
+## 📋 Table des matières
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Fonctionnalités](#fonctionnalités)
+- [Technologies utilisées](#technologies-utilisées)
+- [Prérequis](#prérequis)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Utilisation](#utilisation)
+- [API Documentation](#api-documentation)
+- [Tests](#tests)
+- [Déploiement](#déploiement)
+- [Structure du projet](#structure-du-projet)
+- [Contribution](#contribution)
 
-## React Compiler
+## ✨ Fonctionnalités
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🔐 **Authentification & Autorisation** (JWT)
+- 👥 **Gestion des utilisateurs** (CRUD, rôles)
+- 📦 **Gestion des produits** (CRUD, upload d'images)
+- 🏷️ **Gestion des catégories**
+- 🛒 **Panier d'achat** (authentifié et invité)
+- 📝 **Système de commandes**
+- ⭐ **Système d'avis et notes**
+- 🎫 **Système de coupons de réduction**
+- 🚀 **Cache Redis** pour les performances
+- 📊 **Logging avancé** avec Winston
+- 🔒 **Rate limiting** et sécurité
+- 📚 **Documentation Swagger**
+- ✅ **Tests unitaires et d'intégration**
 
-## Expanding the ESLint configuration
+## 🛠️ Technologies utilisées
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Backend
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Node.js** - Runtime JavaScript
+- **Express.js** - Framework web
+- **MongoDB** - Base de données NoSQL
+- **Mongoose** - ODM pour MongoDB
+- **Redis** - Cache en mémoire
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Authentification & Sécurité
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **JWT** - JSON Web Tokens
+- **bcryptjs** - Hachage des mots de passe
+- **Rate limiting** - Protection contre les attaques
+
+### Outils de développement
+
+- **Nodemon** - Rechargement automatique
+- **Swagger** - Documentation API
+- **Winston** - Logging
+- **Multer** - Upload de fichiers
+- **Yup** - Validation des données
+
+### Tests
+
+- **Mocha** - Framework de test
+- **Chai** - Assertions
+- **Supertest** - Tests HTTP
+- **C8** - Couverture de code
+
+## 📋 Prérequis
+
+- Node.js (v16 ou supérieur)
+- MongoDB (v4.4 ou supérieur)
+- Redis (v6 ou supérieur)
+- npm ou yarn
+
+## 🚀 Installation
+
+### 1. Cloner le repository
+
+```
+git clone https://github.com/ElFirdaous28/E-Market-API-2.git
+cd E-Market-API-2
+npm install
+cp .env.example .env
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ⚙️ Configuration
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Éditer le fichier .env avec vos paramètres :
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
-# E-Market_Fr
+# Server
+PORT=3000
+
+# Database (MongoDB)
+DB_URI=mongodb://127.0.0.1:27017/emarket_db
+DB_URI=mongodb://127.0.0.1:27017/emarket_test_db
+
+# JWT
+JWT_SECRET=votre_jwt_secret_super_securise
+
+# Redis
+REDIS_URL=redis://localhost:6379
+
+```
+
+### Services requis
+
+MongoDB
+
+```
+# Installation sur Ubuntu/Debian
+sudo apt-get install mongodb
+
+# Démarrer MongoDB
+sudo systemctl start mongodb
+sudo systemctl enable mongodb
+```
+
+Redis
+
+```
+# Installation sur Ubuntu/Debian
+sudo apt-get install redis-server
+
+# Démarrer Redis
+sudo systemctl start redis-server
+sudo systemctl enable redis-server
+```
+
+## 🎯 Utilisation
+
+```
+# Démarrer en mode développement
+npm run devStart
+
+# Initialiser la base de données avec des données de test
+npm run seed
+
+# Réinitialiser la base de données
+npm run reset-db
+```
+
+## 📚 API Documentation
+
+La documentation Swagger est disponible à l'adresse :
+
+```
+http://localhost:3000/api/docs
+```
+
+## 🧪 Tests
+
+Exécuter tous les tests
+
+```
+# Tests unitaires
+npm test
+
+# Tests d'intégration
+npm run test:integration
+
+# Tous les tests
+npm run test:all
+
+# Tests avec couverture de code
+npm run coverage
+```
+
+## 👥 Auteurs
+
+- **ElFirdaous28**
+- **Ayoub-fetti**
+- **samirakibous**
+- **wassim205**
