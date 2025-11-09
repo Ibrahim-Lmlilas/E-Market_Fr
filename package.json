@@ -1,64 +1,33 @@
 {
-  "name": "e-market-api",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "e-market-frontend",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server.js",
-    "start": "cross-env NODE_ENV=production node server.js",
-    "seed": "cross-env NODE_ENV=development node seeders/dbSeeder.js",
-    "seed:prod": "node seeders/dbSeeder.js",
-    "reset-db": "cross-env NODE_ENV=development node seeders/resetDB.js",
-    "test": "cross-env NODE_ENV=test mocha --timeout 10000 --exit",
-    "test:integration": "cross-env NODE_ENV=test mocha test/integration/**/*.test.js --timeout 10000 --exit",
-    "test:all": "cross-env NODE_ENV=test mocha test/**/*.test.js --timeout 10000 --exit",
-    "coverage": "cross-env NODE_ENV=test c8 --reporter=text --reporter=html mocha 'test/**/*.test.js' --timeout 10000 --exit",
-    "docker:up": "docker compose up -d --build",
-    "docker:down": "docker compose down -v",
+    "dev": "vite",
+    "build": "vite build",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ElFirdaous28/E-Market-API-2.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ElFirdaous28/E-Market-API-2/issues"
-  },
-  "homepage": "https://github.com/ElFirdaous28/E-Market-API#readme",
   "dependencies": {
-    "@faker-js/faker": "^10.1.0",
-    "bcryptjs": "^3.0.2",
-    "chalk": "^5.6.2",
-    "dotenv": "^17.2.3",
-    "express": "^5.1.0",
-    "express-rate-limit": "^8.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.18.0",
-    "multer": "^2.0.2",
-    "node-cron": "^4.2.1",
-    "nodemailer": "^7.0.10",
-    "redis": "^4.6.0",
-    "sharp": "^0.34.4",
-    "swagger-jsdoc": "^3.7.0",
-    "swagger-ui-express": "^5.0.1",
-    "winston": "^3.18.3",
-    "yup": "^1.7.1"
+    "lucide-react": "^0.552.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.9.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.38.0",
-    "c8": "^10.1.3",
-    "chai": "^6.2.0",
-    "cross-env": "^10.1.0",
-    "eslint": "^9.38.0",
+    "@eslint/js": "^9.36.0",
+    "@tailwindcss/vite": "^4.1.17",
+    "@types/react": "^19.1.16",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.4",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.36.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.22",
     "globals": "^16.4.0",
-    "mocha": "^11.7.4",
-    "nodemon": "^3.1.10",
-    "prettier": "^3.6.2",
-    "supertest": "^7.1.4"
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.17",
+    "vite": "^7.1.7"
   }
 }
