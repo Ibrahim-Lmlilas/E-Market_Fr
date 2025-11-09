@@ -1,0 +1,41 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "../pages/Home";
+import ProductDetails from "../pages/ProductDetails";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import NotFound from "../pages/NotFound";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
+import Loader from "../components/ui/Loader";
+import { useAuth } from "../context/AuthContext";
+
+const AppRoutes = () => {
+  const { isInitializing } = useAuth();
+
+  return (
+    <BrowserRouter>
+      <div className="flex min-h-screen flex-col bg-surface">
+        <Header />
+        <main className="flex-1">
+          {isInitializing ? (
+            <div className="flex h-full items-center justify-center py-20">
+              <Loader label="Chargement de l'application..." />
+            </div>
+          ) : (
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/products/:id" element={<ProductDetails />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          )}
+        </main>
+        <Footer />
+      </div>
+    </BrowserRouter>
+  );
+};
+
+export default AppRoutes;
+
