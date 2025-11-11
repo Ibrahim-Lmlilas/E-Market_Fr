@@ -6,7 +6,7 @@ export type ProductCardProps = {
   id?: string;
   title: string;
   description: string;
-  price: number;
+  prix: number;
   currency?: string;
   imageUrl?: string;
   onAddToCart?: MouseEventHandler<HTMLButtonElement>;
@@ -16,22 +16,33 @@ const ProductCard = ({
   id,
   title,
   description,
-  price,
+  prix,
   currency = "€",
   imageUrl,
   onAddToCart,
 }: ProductCardProps) => {
-  const formattedPrice = new Intl.NumberFormat("fr-FR", {
+  const formattedprix = new Intl.NumberFormat("fr-FR", {
     style: "currency",
     currency: currency === "€" ? "EUR" : currency,
-  }).format(price);
+  }).format(prix);
+
+  const assetBaseUrl = (import.meta.env.VITE_API_URL ?? "").replace(
+    /\/api$/,
+    "",
+  );
+
+  const resolvedImageUrl = imageUrl
+    ? imageUrl.startsWith("http")
+      ? imageUrl
+      : `${assetBaseUrl}${imageUrl}`
+    : undefined;
 
   return (
     <article className="flex h-full flex-col rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
       <div className="relative aspect-[4/3] overflow-hidden rounded-t-xl bg-slate-100">
-        {imageUrl ? (
+        {resolvedImageUrl ? (
           <img
-            src={imageUrl}
+            src={resolvedImageUrl}
             alt={title}
             className="h-full w-full object-cover"
             loading="lazy"
@@ -53,7 +64,7 @@ const ProductCard = ({
 
         <div className="mt-auto flex items-center justify-between gap-3">
           <span className="text-base font-semibold text-emerald-600">
-            {formattedPrice}
+            {formattedprix}
           </span>
           {id ? (
             <Link

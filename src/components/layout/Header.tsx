@@ -40,17 +40,6 @@ const Header = () => {
           >
             Accueil
           </NavLink>
-          <NavLink
-            to="/products/preview"
-            className={({ isActive }) =>
-              [
-                navLinkBase,
-                isActive ? "text-emerald-600" : "text-slate-600",
-              ].join(" ")
-            }
-          >
-            Produits
-          </NavLink>
         </nav>
 
         {user ? (
