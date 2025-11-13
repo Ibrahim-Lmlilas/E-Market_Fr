@@ -6,7 +6,6 @@ import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
-import Loader from "../components/ui/Loader";
 import { useAuth } from "../context/AuthContext";
 
 const AppRoutes = () => {
@@ -19,7 +18,7 @@ const AppRoutes = () => {
         <main className="flex-1">
           {isInitializing ? (
             <div className="flex h-full items-center justify-center py-20">
-              <Loader label="Chargement de l'application..." />
+              <p className="text-slate-600">Chargement de l'application...</p>
             </div>
           ) : (
             <Routes>

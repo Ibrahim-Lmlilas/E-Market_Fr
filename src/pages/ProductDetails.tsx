@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import Loader from "../components/ui/Loader";
 import ErrorMessage from "../components/ui/ErrorMessage";
 import Button from "../components/ui/Button";
 import { getProductById, type Product } from "../services/productService";
@@ -65,7 +64,7 @@ const ProductDetails = () => {
       </header>
 
       {isLoading ? (
-        <Loader label="Chargement du produit..." />
+        <p className="text-center text-slate-600">Chargement du produit...</p>
       ) : error ? (
         <ErrorMessage description={error}>
           <Link to="/" className="inline-block">

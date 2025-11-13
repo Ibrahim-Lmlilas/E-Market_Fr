@@ -1,5 +1,4 @@
 import ProductCard from "../cards/ProductCard";
-import Loader from "../ui/Loader";
 import ErrorMessage from "../ui/ErrorMessage";
 import type { Product } from "../../services/productService";
 
@@ -29,7 +28,7 @@ const ProductShowcase = ({
       </div>
 
       {isLoading ? (
-        <Loader label="Chargement des produits..." />
+        <p className="text-center text-slate-600">Chargement des produits...</p>
       ) : error ? (
         <ErrorMessage description={error} />
       ) : products.length === 0 ? (
