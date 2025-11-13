@@ -63,13 +63,13 @@ const ProductCard = ({
         </div>
 
         <div className="mt-auto flex items-center justify-between gap-3">
-          <span className="text-base font-semibold text-emerald-600">
+          <span className="text-base font-semibold text-black">
             {formattedprix}
           </span>
           {id ? (
             <Link
               to={`/products/${id}`}
-              className="text-sm font-semibold text-emerald-600 hover:text-emerald-700"
+              className="text-sm font-semibold text-black hover:text-slate-600 underline"
             >
               Voir détails
             </Link>

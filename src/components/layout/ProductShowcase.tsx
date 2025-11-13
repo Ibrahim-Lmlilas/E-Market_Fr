@@ -16,11 +16,13 @@ const ProductShowcase = ({
 }: ProductShowcaseProps) => {
   return (
     <section>
-      <div className="mb-6 space-y-2 text-center sm:text-left">
-        <p className="text-sm font-semibold uppercase tracking-wide text-emerald-600">
+      <div className="mb-8 space-y-2 text-left">
+        <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
           Catalogue
         </p>
-        <h2 className="text-3xl font-bold text-slate-900">Nos produits récents</h2>
+        <h2 className="text-4xl font-bold tracking-tight text-black">
+          Nos produits récents
+        </h2>
         <p className="text-sm text-slate-600">
           Les informations sont chargées dynamiquement depuis l’API.
         </p>

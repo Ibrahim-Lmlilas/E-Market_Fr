@@ -23,7 +23,7 @@ const Loader = ({ className, label, size = "md", ...props }: LoaderProps) => (
   >
     <span
       className={[
-        "inline-block animate-spin rounded-full border-emerald-600 border-t-transparent",
+        "inline-block animate-spin rounded-full border-black border-t-transparent",
         sizeMap[size],
       ].join(" ")}
     />

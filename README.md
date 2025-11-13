@@ -1,73 +1,173 @@
-# React + TypeScript + Vite
+# E-Market Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plateforme e-commerce développée avec React, TypeScript et Vite. Cette application consomme l'API backend pour l'authentification et la gestion des produits.
 
-Currently, two official plugins are available:
+## 🚀 Installation locale
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Prérequis
 
-## React Compiler
+- Node.js (version 18 ou supérieure)
+- npm ou yarn
+- Backend API en cours d'exécution sur `http://localhost:3000`
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Étapes d'installation
 
-## Expanding the ESLint configuration
+1. **Cloner le repository** (si applicable)
+   ```bash
+   git clone <url-du-repo>
+   cd e-market_fr
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+2. **Installer les dépendances**
+   ```bash
+   npm install
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+3. **Configurer les variables d'environnement**
+   
+   Créer un fichier `.env` à la racine du projet :
+   ```env
+   VITE_API_URL=http://localhost:3000/api
+   ```
+   
+   > **Note** : Voir `.env.example` pour le format exact.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+4. **Lancer le serveur de développement**
+   ```bash
+   npm run dev
+   ```
+   
+   L'application sera accessible sur `http://localhost:5173`
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+5. **Build de production**
+   ```bash
+   npm run build
+   ```
+   
+   Les fichiers optimisés seront générés dans le dossier `dist/`
+
+## 📁 Structure du projet
+
+```
+src/
+├── components/          # Composants réutilisables
+│   ├── cards/          # Cartes produits
+│   ├── layout/         # Header, Footer, HeroSection
+│   ├── routes/         # ProtectedRoute
+│   └── ui/             # Button, Loader, ErrorMessage
+├── context/            # AuthContext pour la gestion de l'authentification
+├── pages/              # Pages de l'application
+│   ├── Home.tsx
+│   ├── ProductDetails.tsx
+│   ├── Login.tsx
+│   ├── Register.tsx
+│   └── NotFound.tsx
+├── routes/             # Configuration des routes (AppRoutes)
+├── services/           # Services API
+│   ├── apiClient.ts
+│   ├── authService.ts
+│   ├── productService.ts
+│   └── userService.ts
+└── assets/             # Images et ressources statiques
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛣️ Routes disponibles
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Route | Description | Protection |
+|-------|-------------|------------|
+| `/` | Page d'accueil (liste des produits) | Publique |
+| `/products/:id` | Détails d'un produit | Publique |
+| `/login` | Formulaire de connexion | Publique |
+| `/register` | Formulaire d'inscription | Publique |
+| `*` | Page 404 | Publique |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🔐 Authentification
+
+L'application utilise JWT pour l'authentification :
+
+- **Inscription** : `POST /users` via `authService.register()`
+- **Connexion** : `POST /auth/login` via `authService.login()`
+- **Profil utilisateur** : `GET /users/me` via `userService.getCurrentUser()`
+- **Déconnexion** : Suppression du token du localStorage
+
+Le token JWT est stocké dans `localStorage` et automatiquement ajouté aux requêtes API via `apiClient`.
+
+### Utilisation du contexte d'authentification
+
+```tsx
+import { useAuth } from '../context/AuthContext';
+
+const MyComponent = () => {
+  const { user, login, logout, isAuthenticated } = useAuth();
+  // ...
+};
 ```
+
+## 📡 API Backend
+
+L'application consomme les endpoints suivants :
+
+### Produits
+- `GET /api/products` - Liste de tous les produits
+- `GET /api/products/:id` - Détails d'un produit
+
+### Authentification
+- `POST /api/users` - Inscription
+- `POST /api/auth/login` - Connexion
+- `GET /api/users/me` - Profil utilisateur (requiert authentification)
+
+## 🎨 Technologies utilisées
+
+| Domaine | Technologie |
+|---------|-------------|
+| Framework | React 18+ |
+| Build Tool | Vite |
+| Langage | TypeScript |
+| Navigation | React Router v6 |
+| HTTP Client | Axios |
+| Styling | TailwindCSS |
+| State Management | React Context API (useContext) |
+| Hooks | useState, useEffect, useContext |
+
+## 🎯 Fonctionnalités
+
+- ✅ Authentification complète (inscription, connexion, déconnexion)
+- ✅ Affichage de la liste des produits depuis l'API
+- ✅ Page de détails pour chaque produit
+- ✅ Interface responsive et moderne (design minimalist grayscale)
+- ✅ Gestion des erreurs et états de chargement
+- ✅ Composants réutilisables (Button, ProductCard, Loader, etc.)
+
+## 📝 Variables d'environnement
+
+| Variable | Description | Exemple |
+|----------|-------------|---------|
+| `VITE_API_URL` | URL de base de l'API backend | `http://localhost:3000/api` |
+
+## 🧪 Scripts disponibles
+
+- `npm run dev` - Lance le serveur de développement
+- `npm run build` - Génère le build de production
+- `npm run preview` - Prévisualise le build de production
+- `npm run lint` - Vérifie le code avec ESLint
+
+## 📸 Screenshots
+
+> Ajoutez ici des captures d'écran de votre application ou un lien vers votre maquette Figma.
+
+## 🔄 Prochaines étapes
+
+- [ ] Implémentation du panier d'achat
+- [ ] Dashboard vendeur
+- [ ] Gestion du state global (Redux/Zustand)
+- [ ] Mode sombre (dark mode)
+- [ ] Validation des formulaires avec React Hook Form + Yup
+- [ ] Notifications toast (react-toastify)
+
+## 📄 Licence
+
+Ce projet est développé dans le cadre d'un projet pédagogique.
+
+## 👤 Auteur
+
+Développé dans le cadre du Sprint 3 - E-Market Frontend

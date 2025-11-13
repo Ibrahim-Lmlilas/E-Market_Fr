@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import Button from "../ui/Button";
 
 const navLinkBase =
-  "text-sm font-medium transition hover:text-emerald-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600";
+  "text-sm font-medium uppercase tracking-wide transition hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -22,69 +22,88 @@ const Header = () => {
   };
 
   return (
-    <header className="border-b border-slate-200 bg-white">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <Link to="/" className="text-lg font-semibold text-emerald-600">
-          E-Market
+    <header className="border-b border-black bg-white">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+        <Link to="/" className="flex items-center gap-2">
+          <div className="h-6 w-6 rounded-sm bg-black" />
+          <span className="text-xl font-semibold tracking-tight text-black">
+            E-MARKET
+          </span>
         </Link>
 
-        <nav className="flex items-center gap-6">
+        <nav className="flex items-center gap-8">
           <NavLink
             to="/"
             className={({ isActive }) =>
               [
                 navLinkBase,
-                isActive ? "text-emerald-600" : "text-slate-600",
+                isActive ? "text-black" : "text-slate-600",
               ].join(" ")
             }
           >
-            Accueil
+            PRODUITS
           </NavLink>
+          {user ? (
+            <>
+              <NavLink
+                to="/profile"
+                className={({ isActive }) =>
+                  [
+                    navLinkBase,
+                    isActive ? "text-black" : "text-slate-600",
+                  ].join(" ")
+                }
+              >
+                PROFILE
+              </NavLink>
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
+                  <span>CART (0)</span>
+                </div>
+                <Button
+                  variant="outline"
+                  onClick={handleLogout}
+                  isLoading={isLoggingOut}
+                  className="border-black text-black hover:bg-black hover:text-white"
+                >
+                  DÉCONNEXION
+                </Button>
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
+                <span>CART (0)</span>
+              </div>
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  [
+                    "px-4 py-2 text-sm font-semibold uppercase tracking-wide transition",
+                    isActive
+                      ? "bg-black text-white"
+                      : "border border-black text-black hover:bg-black hover:text-white",
+                  ].join(" ")
+                }
+              >
+                CONNEXION
+              </NavLink>
+              <NavLink
+                to="/register"
+                className={({ isActive }) =>
+                  [
+                    "px-4 py-2 text-sm font-semibold uppercase tracking-wide transition",
+                    isActive
+                      ? "bg-black text-white"
+                      : "bg-black text-white hover:bg-slate-800",
+                  ].join(" ")
+                }
+              >
+                INSCRIPTION
+              </NavLink>
+            </div>
+          )}
         </nav>
-
-        {user ? (
-          <div className="flex items-center gap-3">
-            <span className="hidden text-sm font-medium text-slate-600 sm:inline">
-              Bonjour, {user.fullName.split(" ")[0]}
-            </span>
-            <Button
-              variant="outline"
-              onClick={handleLogout}
-              isLoading={isLoggingOut}
-            >
-              Déconnexion
-            </Button>
-          </div>
-        ) : (
-          <div className="flex items-center gap-3">
-            <NavLink
-              to="/login"
-              className={({ isActive }) =>
-                [
-                  "rounded-md px-4 py-2 text-sm font-semibold transition",
-                  isActive
-                    ? "bg-emerald-600 text-white"
-                    : "border border-slate-300 text-slate-700 hover:border-emerald-200 hover:text-emerald-600",
-                ].join(" ")
-              }
-            >
-              Connexion
-            </NavLink>
-            <NavLink
-              to="/register"
-              className={({ isActive }) =>
-                [
-                  "rounded-md px-4 py-2 text-sm font-semibold transition",
-                  isActive
-                    ? "bg-emerald-600 text-white"
-                    : "bg-emerald-500 text-white hover:bg-emerald-600",
-                ].join(" ")
-              }
-            >
-              Inscription
-            </NavLink>
-          </div>
-        )}
       </div>
     </header>
   );

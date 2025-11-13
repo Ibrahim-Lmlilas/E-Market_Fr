@@ -1,20 +1,24 @@
 const Footer = () => {
   return (
-    <footer className="border-t border-slate-200 bg-white">
-      <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-8 text-center text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between sm:text-left">
-        <p>&copy; {new Date().getFullYear()} E-Market. Tous droits réservés.</p>
-        <div className="flex justify-center gap-4 sm:justify-end">
+    <footer className="border-t border-black bg-white">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-12 text-left text-xs uppercase tracking-wider text-slate-700">
+        <div className="flex flex-col gap-2 sm:flex-row sm:justify-between">
+          <p>ALL RIGHTS RESERVED</p>
+          <p>EST. /2025</p>
+          <p>MADE IN - MOROCCO</p>
+        </div>
+        <div className="mt-4 flex flex-wrap gap-6 text-sm font-medium">
           <a
             href="mailto:contact@e-market.test"
-            className="transition hover:text-emerald-600"
+            className="transition hover:text-black"
           >
-            Contact
+            CONTACT
           </a>
-          <a href="#" className="transition hover:text-emerald-600">
-            Mentions légales
+          <a href="#" className="transition hover:text-black">
+            MENTIONS LÉGALES
           </a>
-          <a href="#" className="transition hover:text-emerald-600">
-            Politique de confidentialité
+          <a href="#" className="transition hover:text-black">
+            POLITIQUE DE CONFIDENTIALITÉ
           </a>
         </div>
       </div>

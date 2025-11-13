@@ -48,7 +48,7 @@ const Login = () => {
   return (
     <main className="mx-auto flex min-h-[60vh] max-w-lg flex-col gap-8 px-4 py-12">
       <header className="space-y-2 text-center">
-        <p className="text-sm font-semibold uppercase tracking-wide text-emerald-600">
+        <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
           authentification
         </p>
         <h1 className="text-3xl font-bold text-slate-900">Connexion</h1>
@@ -70,7 +70,7 @@ const Login = () => {
             name="email"
             value={form.email}
             placeholder="exemple@domaine.com"
-            className="w-full rounded-md border border-slate-300 px-4 py-2 text-slate-900 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+            className="w-full rounded-md border border-slate-300 px-4 py-2 text-slate-900 outline-none focus:border-black focus:ring-2 focus:ring-slate-200"
             autoComplete="email"
             required
             onChange={handleChange}
@@ -84,7 +84,7 @@ const Login = () => {
             name="password"
             value={form.password}
             placeholder="••••••••"
-            className="w-full rounded-md border border-slate-300 px-4 py-2 text-slate-900 outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+            className="w-full rounded-md border border-slate-300 px-4 py-2 text-slate-900 outline-none focus:border-black focus:ring-2 focus:ring-slate-200"
             autoComplete="current-password"
             required
             onChange={handleChange}
@@ -105,7 +105,7 @@ const Login = () => {
 
       <p className="text-center text-sm text-slate-600">
         Pas encore de compte ?{" "}
-        <Link to="/register" className="font-semibold text-emerald-600">
+        <Link to="/register" className="font-semibold text-black underline hover:text-slate-600">
           Inscrivez-vous
         </Link>
       </p>

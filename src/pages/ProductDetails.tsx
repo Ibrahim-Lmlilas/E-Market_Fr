@@ -52,7 +52,7 @@ const ProductDetails = () => {
   return (
     <main className="mx-auto flex min-h-[60vh] max-w-4xl flex-col gap-8 px-4 py-12">
       <header className="space-y-2 text-center sm:text-left">
-        <p className="text-sm font-semibold uppercase tracking-wide text-emerald-600">
+        <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
           fiche produit
         </p>
         <h1 className="text-3xl font-bold text-slate-900">
@@ -91,7 +91,7 @@ const ProductDetails = () => {
             </div>
             <Link
               to="/"
-              className="text-center text-sm font-semibold text-emerald-600"
+              className="text-center text-sm font-semibold text-black underline hover:text-slate-600"
             >
               ← Retour à la liste des produits
             </Link>
@@ -107,7 +107,7 @@ const ProductDetails = () => {
 
             <div className="flex flex-wrap items-center gap-4">
               {product.category && (
-                <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-emerald-700">
+                <span className="rounded-full border border-black bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-black">
                   {product.category}
                 </span>
               )}
@@ -118,8 +118,8 @@ const ProductDetails = () => {
               )}
             </div>
 
-            <div className="rounded-md bg-emerald-50 p-4">
-              <span className="text-lg font-semibold text-emerald-600">
+            <div className="rounded-md border border-black bg-white p-4">
+              <span className="text-lg font-semibold text-black">
                 {formattedPrice}
               </span>
             </div>
