@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Button from "../ui/Button";
+import logoImage from "../../assets/image copy 2.png";
 
 const navLinkBase =
   "text-sm font-medium uppercase tracking-wide transition hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black";
@@ -22,10 +23,14 @@ const Header = () => {
   };
 
   return (
-    <header className="border-b border-black bg-white">
+    <header className="border-b border-black bg-[#F5F5DC]">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
         <Link to="/" className="flex items-center gap-2">
-          <div className="h-6 w-6 rounded-sm bg-black" />
+          <img
+            src={logoImage}
+            alt="E-Market Logo"
+            className="h-8 w-8"
+          />
           <span className="text-xl font-semibold tracking-tight text-black">
             E-MARKET
           </span>
@@ -64,7 +69,7 @@ const Header = () => {
                   variant="outline"
                   onClick={handleLogout}
                   isLoading={isLoggingOut}
-                  className="border-black text-black hover:bg-black hover:text-white"
+                  className="rounded-lg border-black text-black hover:bg-black hover:text-white"
                 >
                   DÉCONNEXION
                 </Button>
@@ -79,7 +84,7 @@ const Header = () => {
                 to="/login"
                 className={({ isActive }) =>
                   [
-                    "px-4 py-2 text-sm font-semibold uppercase tracking-wide transition",
+                    "rounded-lg px-4 py-2 text-sm font-semibold uppercase tracking-wide transition",
                     isActive
                       ? "bg-black text-white"
                       : "border border-black text-black hover:bg-black hover:text-white",
@@ -92,7 +97,7 @@ const Header = () => {
                 to="/register"
                 className={({ isActive }) =>
                   [
-                    "px-4 py-2 text-sm font-semibold uppercase tracking-wide transition",
+                    "rounded-lg px-4 py-2 text-sm font-semibold uppercase tracking-wide transition",
                     isActive
                       ? "bg-black text-white"
                       : "bg-black text-white hover:bg-slate-800",

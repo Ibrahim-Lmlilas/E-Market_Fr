@@ -9,6 +9,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   useEffect(() => {
     if (!id) return;
@@ -34,100 +35,158 @@ const ProductDetails = () => {
     [],
   );
 
-  const firstImage = useMemo(() => {
-    if (!product?.images?.length) return undefined;
-    const url = product.images[0];
-    return url.startsWith("http") ? url : `${assetBaseUrl}${url}`;
+  const productImages = useMemo(() => {
+    if (!product?.images?.length) return [];
+    return product.images.map((url) =>
+      url.startsWith("http") ? url : `${assetBaseUrl}${url}`,
+    );
   }, [assetBaseUrl, product]);
+
+  const mainImage = useMemo(() => {
+    return productImages[selectedImageIndex] || productImages[0];
+  }, [productImages, selectedImageIndex]);
 
   const formattedPrice = useMemo(() => {
     if (!product) return null;
     return new Intl.NumberFormat("fr-FR", {
       style: "currency",
-      currency: "EUR",
+      currency: "MAD",
     }).format(product.prix ?? 0);
   }, [product]);
 
   return (
-    <main className="mx-auto flex min-h-[60vh] max-w-4xl flex-col gap-8 px-4 py-12">
-      <header className="space-y-2 text-center sm:text-left">
-        <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
-          fiche produit
-        </p>
-        <h1 className="text-3xl font-bold text-slate-900">
-          {product ? product.title : "Chargement du produit"}
-        </h1>
-        <p className="max-w-2xl text-sm text-slate-600">
-          Découvrez les détails complets de ce produit. Vous pouvez revenir à la
-          liste complète à tout moment.
-        </p>
-      </header>
-
+    <main className="mx-auto min-h-[60vh] max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       {isLoading ? (
-        <p className="text-center text-slate-600">Chargement du produit...</p>
+        <div className="flex items-center justify-center py-20">
+          <p className="text-slate-600">Chargement du produit...</p>
+        </div>
       ) : error ? (
-        <ErrorMessage description={error}>
-          <Link to="/" className="inline-block">
-            <Button variant="outline">Retour à la boutique</Button>
-          </Link>
-        </ErrorMessage>
+        <div className="py-20">
+          <ErrorMessage description={error}>
+            <Link to="/" className="inline-block mt-4">
+              <Button variant="outline">Retour à la boutique</Button>
+            </Link>
+          </ErrorMessage>
+        </div>
       ) : product ? (
-        <section className="grid gap-6 rounded-xl border border-slate-200 bg-white p-8 shadow-sm md:grid-cols-[2fr,3fr]">
-          <div className="flex flex-col gap-4">
-            <div className="flex h-64 items-center justify-center overflow-hidden rounded-lg bg-slate-100">
-              {firstImage ? (
+        <div className="grid gap-8 lg:grid-cols-2">
+          {/* Left Section - Images */}
+          <div className="space-y-4">
+            {/* Main Image */}
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-slate-100">
+              {mainImage ? (
                 <img
-                  src={firstImage}
+                  src={mainImage}
                   alt={product.title}
                   className="h-full w-full object-cover"
                   loading="lazy"
                 />
               ) : (
-                <span className="text-sm font-medium text-slate-500">
-                  Image en cours de préparation
-                </span>
+                <div className="flex h-full w-full items-center justify-center">
+                  <span className="text-sm font-medium text-slate-500">
+                    Image non disponible
+                  </span>
+                </div>
               )}
             </div>
-            <Link
-              to="/"
-              className="text-center text-sm font-semibold text-black underline hover:text-slate-600"
-            >
-              ← Retour à la liste des produits
-            </Link>
+
+            {/* Thumbnail Gallery */}
+            {productImages.length > 1 && (
+              <div className="grid grid-cols-4 gap-4">
+                {productImages.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImageIndex(index)}
+                    className={`relative aspect-square overflow-hidden rounded-lg border-2 transition ${
+                      selectedImageIndex === index
+                        ? "border-black"
+                        : "border-slate-200 hover:border-slate-400"
+                    }`}
+                  >
+                    <img
+                      src={image}
+                      alt={`${product.title} - Image ${index + 1}`}
+                      className="h-full w-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
-          <div className="space-y-4 text-slate-700">
+          {/* Right Section - Product Info */}
+          <div className="flex flex-col space-y-6">
+            {/* Title and Category */}
             <div>
-              <h2 className="text-2xl font-semibold text-slate-900">
-                {product.title}
-              </h2>
-              <p className="mt-3 leading-relaxed">{product.description}</p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-4">
               {product.category && (
-                <span className="rounded-full border border-black bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-black">
+                <span className="mb-2 inline-block rounded-full border border-black bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-black">
                   {product.category}
                 </span>
               )}
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-black sm:text-4xl">
+                {product.title}
+              </h1>
+            </div>
+
+            {/* Price */}
+            <div>
+              <p className="text-4xl font-bold text-black">{formattedPrice}</p>
               {typeof product.stock === "number" && (
-                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
-                  Stock : {product.stock}
-                </span>
+                <p
+                  className={`mt-2 text-sm font-medium ${
+                    product.stock > 0 ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {product.stock > 0
+                    ? `En stock (${product.stock} disponibles)`
+                    : "Rupture de stock"}
+                </p>
               )}
             </div>
 
-            <div className="rounded-md border border-black bg-white p-4">
-              <span className="text-lg font-semibold text-black">
-                {formattedPrice}
-              </span>
+            {/* Description */}
+            <div className="border-t border-slate-200 pt-6">
+              <h2 className="mb-3 text-lg font-semibold text-black">
+                Description
+              </h2>
+              <p className="leading-relaxed text-slate-700">
+                {product.description}
+              </p>
             </div>
 
-            <Button variant="primary" size="lg">
-              Ajouter au panier
-            </Button>
+            {/* Back to Products Button */}
+            <div className="border-t border-slate-200 pt-6">
+              <Link to="/" className="block">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  fullWidth
+                  className="rounded-lg"
+                >
+                  Retour aux produits
+                </Button>
+              </Link>
+            </div>
+
+            {/* Additional Info */}
+            <div className="border-t border-slate-200 pt-6">
+              <dl className="space-y-3 text-sm">
+                {product._id && (
+                  <div className="flex justify-between">
+                    <dt className="font-medium text-slate-600">Référence</dt>
+                    <dd className="text-slate-900">{product._id}</dd>
+                  </div>
+                )}
+                {product.category && (
+                  <div className="flex justify-between">
+                    <dt className="font-medium text-slate-600">Catégorie</dt>
+                    <dd className="text-slate-900">{product.category}</dd>
+                  </div>
+                )}
+              </dl>
+            </div>
           </div>
-        </section>
+        </div>
       ) : null}
     </main>
   );

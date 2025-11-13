@@ -13,25 +13,49 @@ const AppRoutes = () => {
 
   return (
     <BrowserRouter>
-      <div className="flex min-h-screen flex-col bg-surface">
-        <Header />
-        <main className="flex-1">
-          {isInitializing ? (
-            <div className="flex h-full items-center justify-center py-20">
-              <p className="text-slate-600">Chargement de l'application...</p>
+      <Routes>
+        {/* Login page - بدون Header و Footer */}
+        <Route
+          path="/login"
+          element={
+            <div className="h-screen w-full bg-white">
+              <Login />
             </div>
-          ) : (
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/products/:id" element={<ProductDetails />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          )}
-        </main>
-        <Footer />
-      </div>
+          }
+        />
+        {/* Register page - بدون Header و Footer */}
+        <Route
+          path="/register"
+          element={
+            <div className="h-screen w-full bg-white">
+              <Register />
+            </div>
+          }
+        />
+        {/* باقي الصفحات - مع Header و Footer */}
+        <Route
+          path="*"
+          element={
+            <div className="flex min-h-screen flex-col bg-surface">
+              <Header />
+              <main className="flex-1">
+                {isInitializing ? (
+                  <div className="flex h-full items-center justify-center py-20">
+                    <p className="text-slate-600">Chargement de l'application...</p>
+                  </div>
+                ) : (
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/products/:id" element={<ProductDetails />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                )}
+              </main>
+              <Footer />
+            </div>
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 };

@@ -18,16 +18,16 @@ const ProductCard = (props: ProductCardProps) => {
   const title = props.title;
   const description = props.description;
   const prix = props.prix;
-  const currency = props.currency || "€";
+  const currency = props.currency || "MAD";
   const imageUrl = props.imageUrl;
   const onAddToCart = props.onAddToCart;
 
-  // Formater le prix en euros
+  // Formater le prix en MAD
   let formattedprix = "";
-  if (currency === "€") {
+  if (currency === "MAD") {
     formattedprix = new Intl.NumberFormat("fr-FR", {
       style: "currency",
-      currency: "EUR",
+      currency: "MAD",
     }).format(prix);
   } else {
     formattedprix = new Intl.NumberFormat("fr-FR", {

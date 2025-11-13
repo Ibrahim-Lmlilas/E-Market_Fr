@@ -3,6 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import Button from "../components/ui/Button";
 import ErrorMessage from "../components/ui/ErrorMessage";
 import { useAuth } from "../context/AuthContext";
+import logoImage from "../assets/image copy 2.png";
+import registerImage from "../assets/image copy 3.png";
 
 type RegisterFormState = {
   fullName: string;
@@ -48,84 +50,113 @@ const Register = () => {
   };
 
   return (
-    <main className="mx-auto flex min-h-[60vh] max-w-xl flex-col gap-8 px-4 py-12">
-      <header className="space-y-2 text-center">
-        <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
-          authentification
-        </p>
-        <h1 className="text-3xl font-bold text-slate-900">Créer un compte</h1>
-        <p className="text-sm text-slate-600">
-          Version statique du formulaire d’inscription. À connecter à l’API par
-          la suite.
-        </p>
-      </header>
-
-      <form
-        className="space-y-6 rounded-xl border border-slate-200 bg-white p-8 shadow-sm"
-        onSubmit={handleSubmit}
-      >
-        <label className="block space-y-2">
-          <span className="text-sm font-medium text-slate-700">Nom complet</span>
-          <input
-            type="text"
-            name="fullName"
-            value={form.fullName}
-            placeholder="Nom et prénom"
-            className="w-full rounded-md border border-slate-300 px-4 py-2 text-slate-900 outline-none focus:border-black focus:ring-2 focus:ring-slate-200"
-            autoComplete="name"
-            required
-            onChange={handleChange}
-          />
-        </label>
-
-        <label className="block space-y-2">
-          <span className="text-sm font-medium text-slate-700">
-            Adresse e-mail
-          </span>
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            placeholder="exemple@domaine.com"
-            className="w-full rounded-md border border-slate-300 px-4 py-2 text-slate-900 outline-none focus:border-black focus:ring-2 focus:ring-slate-200"
-            autoComplete="email"
-            required
-            onChange={handleChange}
-          />
-        </label>
-
-        <label className="block space-y-2">
-          <span className="text-sm font-medium text-slate-700">Mot de passe</span>
-          <input
-            type="password"
-            name="password"
-            value={form.password}
-            placeholder="Minimum 8 caractères"
-            className="w-full rounded-md border border-slate-300 px-4 py-2 text-slate-900 outline-none focus:border-black focus:ring-2 focus:ring-slate-200"
-            autoComplete="new-password"
-            required
-            onChange={handleChange}
-          />
-        </label>
-
-        {error && <ErrorMessage description={error} />}
-
-        <Button
-          type="submit"
-          fullWidth
-          isLoading={isSubmitting}
-          disabled={!form.email || !form.password || !form.fullName}
+    <main className="flex h-screen w-full overflow-hidden">
+      {/* Left Section - Register Form */}
+      <div className="relative flex w-full flex-col items-center justify-center bg-white px-8 py-12 lg:w-1/2 lg:overflow-y-auto">
+        {/* Logo cliquable en haut à gauche */}
+        <Link
+          to="/"
+          className="absolute left-8 top-8 z-10 transition-opacity hover:opacity-80"
         >
-          S’inscrire
-        </Button>
-      </form>
-
-      <p className="text-center text-sm text-slate-600">
-        Déjà inscrit ?{" "}
-        <Link to="/login" className="font-semibold text-black underline hover:text-slate-600">
-          Connectez-vous
+          <img
+            src={logoImage}
+            alt="E-Market Logo"
+            className="h-12 w-12 cursor-pointer"
+          />
         </Link>
-      </p>
+        <div className="w-full max-w-md space-y-8">
+          {/* Register Title */}
+          <h1 className="text-5xl font-bold text-black">Register</h1>
+
+          {/* Form */}
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            {/* Full Name Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-black">
+                Full Name
+              </label>
+              <input
+                type="text"
+                name="fullName"
+                value={form.fullName}
+                placeholder="John Doe"
+                className="w-full border-b border-slate-300 bg-transparent px-0 py-2 text-black placeholder-slate-400 outline-none focus:border-black"
+                autoComplete="name"
+                required
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* Email Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-black">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                placeholder="email@example.com"
+                className="w-full border-b border-slate-300 bg-transparent px-0 py-2 text-black placeholder-slate-400 outline-none focus:border-black"
+                autoComplete="email"
+                required
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* Password Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-bold text-black">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                value={form.password}
+                placeholder="••••••••"
+                className="w-full border-b border-slate-300 bg-transparent px-0 py-2 text-black placeholder-slate-400 outline-none focus:border-black"
+                autoComplete="new-password"
+                required
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* Error Message */}
+            {error && <ErrorMessage description={error} />}
+
+            {/* Sign Up Button */}
+            <Button
+              type="submit"
+              fullWidth
+              isLoading={isSubmitting}
+              disabled={!form.email || !form.password || !form.fullName}
+              className="mt-8 rounded-sm"
+            >
+              Sign Up
+            </Button>
+          </form>
+
+          {/* Login Link */}
+          <p className="text-sm text-slate-500">
+            already have account ?{" "}
+            <Link
+              to="/login"
+              className="font-semibold text-black hover:underline"
+            >
+              Login
+            </Link>
+          </p>
+        </div>
+      </div>
+
+      {/* Right Section - Image */}
+      <div className="hidden w-1/2 bg-white lg:block lg:overflow-hidden">
+        <img
+          src={registerImage}
+          alt="Register"
+          className="h-full w-full object-cover object-center"
+        />
+      </div>
     </main>
   );
 };
