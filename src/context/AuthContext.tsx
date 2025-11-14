@@ -1,21 +1,7 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
+import {createContext,useCallback,useContext,useEffect,useMemo,useState,type ReactNode,} from "react";
 import { isAxiosError } from "axios";
 import { setAuthToken } from "../services/apiClient";
-import {
-  login as loginRequest,
-  logout as logoutRequest,
-  register as registerRequest,
-  type LoginPayload,
-  type RegisterPayload,
-} from "../services/authService";
+import {login as loginRequest,logout as logoutRequest,register as registerRequest,type LoginPayload, type RegisterPayload,} from "../services/authService";
 import { getCurrentUser, type UserProfile } from "../services/userService";
 
 type AuthContextValue = {
