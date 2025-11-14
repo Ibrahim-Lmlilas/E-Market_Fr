@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import Button from "../ui/Button";
 import logoImage from "../../assets/image copy 2.png";
 
 const navLinkBase =
@@ -37,27 +36,33 @@ const Header = () => {
         </Link>
 
         <nav className="flex items-center gap-8">
+          {/* Products Link */}
           <NavLink
             to="/"
-            className={({ isActive }) =>
-              [
-                navLinkBase,
-                isActive ? "text-black" : "text-slate-600",
-              ].join(" ")
-            }
+            className={({ isActive }) => {
+              if (isActive) {
+                return navLinkBase + " text-black";
+              } else {
+                return navLinkBase + " text-slate-600";
+              }
+            }}
           >
             PRODUITS
           </NavLink>
+
+          {/* If the user is logged in */}
           {user ? (
             <>
+              {/* Profile Link */}
               <NavLink
                 to="/profile"
-                className={({ isActive }) =>
-                  [
-                    navLinkBase,
-                    isActive ? "text-black" : "text-slate-600",
-                  ].join(" ")
-                }
+                className={({ isActive }) => {
+                  if (isActive) {
+                    return navLinkBase + " text-black";
+                  } else {
+                    return navLinkBase + " text-slate-600";
+                  }
+                }}
               >
                 PROFILE
               </NavLink>
@@ -65,44 +70,46 @@ const Header = () => {
                 <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
                   <span>CART (0)</span>
                 </div>
-                <Button
-                  variant="outline"
+                <button
                   onClick={handleLogout}
-                  isLoading={isLoggingOut}
-                  className="rounded-lg border-black text-black hover:bg-black hover:text-white"
+                  disabled={isLoggingOut}
+                  className="rounded-lg border border-black bg-transparent px-4 py-2 text-sm font-semibold text-black transition hover:bg-black hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  DÉCONNEXION
-                </Button>
+                  {isLoggingOut ? "Déconnexion..." : "DÉCONNEXION"}
+                </button>
               </div>
             </>
           ) : (
+            /* If the user is not logged in */
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
                 <span>CART (0)</span>
               </div>
+              {/* Login Link */}
               <NavLink
                 to="/login"
-                className={({ isActive }) =>
-                  [
-                    "rounded-lg px-4 py-2 text-sm font-semibold uppercase tracking-wide transition",
-                    isActive
-                      ? "bg-black text-white"
-                      : "border border-black text-black hover:bg-black hover:text-white",
-                  ].join(" ")
-                }
+                className={({ isActive }) => {
+                  const baseClasses = "rounded-lg px-4 py-2 text-sm font-semibold uppercase tracking-wide transition";
+                  if (isActive) {
+                    return baseClasses + " bg-black text-white";
+                  } else {
+                    return baseClasses + " border border-black text-black hover:bg-black hover:text-white";
+                  }
+                }}
               >
                 CONNEXION
               </NavLink>
+              {/* Register Link */}
               <NavLink
                 to="/register"
-                className={({ isActive }) =>
-                  [
-                    "rounded-lg px-4 py-2 text-sm font-semibold uppercase tracking-wide transition",
-                    isActive
-                      ? "bg-black text-white"
-                      : "bg-black text-white hover:bg-slate-800",
-                  ].join(" ")
-                }
+                className={({ isActive }) => {
+                  const baseClasses = "rounded-lg px-4 py-2 text-sm font-semibold uppercase tracking-wide transition";
+                  if (isActive) {
+                    return baseClasses + " bg-black text-white";
+                  } else {
+                    return baseClasses + " bg-black text-white hover:bg-slate-800";
+                  }
+                }}
               >
                 INSCRIPTION
               </NavLink>

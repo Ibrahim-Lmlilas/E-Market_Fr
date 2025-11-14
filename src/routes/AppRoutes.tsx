@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import ProductDetails from "../pages/ProductDetails";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Profile from "../pages/Profile";
 import NotFound from "../pages/NotFound";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
@@ -47,6 +48,7 @@ const AppRoutes = () => {
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/products/:id" element={<ProductDetails />} />
+                    <Route path="/profile" element={<Profile />} />
                     <Route path="*" element={<NotFound />} />
                   </Routes>
                 )}

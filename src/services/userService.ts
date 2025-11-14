@@ -1,14 +1,28 @@
 import { apiClient } from "./apiClient";
 
 export type UserProfile = {
-  id: string;
+  _id: string;
   email: string;
   fullName: string;
   role?: string;
+  profileImage?: string | null;
+  isDelete?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
-export const getCurrentUser = async () => {
-  const { data } = await apiClient.get<UserProfile>("/users/me");
-  return data;
+type UserProfileResponse = {
+  success?: boolean;
+  data?: UserProfile;
+};
+
+export const getCurrentUser = async (): Promise<UserProfile> => {
+  const { data } = await apiClient.get<UserProfile | UserProfileResponse>("/users/me");
+  
+  if (typeof data === 'object' && data !== null && 'data' in data && 'success' in data) {
+    return (data as UserProfileResponse).data!;
+  }
+  
+  return data as UserProfile;
 };
 

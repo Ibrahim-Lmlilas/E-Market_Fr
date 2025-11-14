@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import Button from "../components/ui/Button";
-import ErrorMessage from "../components/ui/ErrorMessage";
 import { useAuth } from "../context/AuthContext";
 import logoImage from "../assets/image copy 2.png";
 
@@ -102,18 +100,20 @@ const Login = () => {
             </div>
 
             {/* Error Message */}
-            {error && <ErrorMessage description={error} />}
+            {error && (
+              <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+                <p className="text-sm text-red-600">{error}</p>
+              </div>
+            )}
 
             {/* Sign In Button */}
-            <Button
+            <button
               type="submit"
-              fullWidth
-              isLoading={isSubmitting}
-              disabled={!form.email || !form.password}
-              className="mt-8 rounded-sm"
+              disabled={isSubmitting || !form.email || !form.password}
+              className="mt-8 w-full rounded-sm bg-black px-5 py-3 text-base font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Sign In
-            </Button>
+              {isSubmitting ? "Chargement..." : "Sign In"}
+            </button>
           </form>
 
           {/* Create Account Link */}

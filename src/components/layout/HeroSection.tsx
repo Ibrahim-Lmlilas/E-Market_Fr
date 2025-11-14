@@ -1,5 +1,4 @@
 import heroImage from "../../assets/image copy 5.png";
-import Button from "../ui/Button";
 
 const HeroSection = () => {
   return (
@@ -17,12 +16,9 @@ const HeroSection = () => {
             Discover a wide range of high-quality products combining performance,
             innovation, and affordability for every tech enthusiast.
           </p>
-          <Button
-            size="lg"
-            className="bg-black text-black hover:bg-gray-900"
-          >
+          <button className="rounded-lg bg-black px-5 py-3 text-base font-semibold text-white transition hover:bg-gray-900">
             Explore All Products
-          </Button>
+          </button>
         </div>
       </div>
     </section>
