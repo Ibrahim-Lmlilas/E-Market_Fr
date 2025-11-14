@@ -14,7 +14,7 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Login page - بدون Header و Footer */}
+        {/* Login page  */}
         <Route
           path="/login"
           element={
@@ -23,7 +23,7 @@ const AppRoutes = () => {
             </div>
           }
         />
-        {/* Register page - بدون Header و Footer */}
+        {/* Register page  */}
         <Route
           path="/register"
           element={
@@ -32,7 +32,7 @@ const AppRoutes = () => {
             </div>
           }
         />
-        {/* باقي الصفحات - مع Header و Footer */}
+        {/* Header  Footer */}
         <Route
           path="*"
           element={
